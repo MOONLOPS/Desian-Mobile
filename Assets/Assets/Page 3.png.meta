@@ -116,12 +116,12 @@ TextureImporter:
       name: Page 3_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1080
-        height: 1920
+        x: 58
+        y: 1602
+        width: 791
+        height: 178
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -130,6 +130,72 @@ TextureImporter:
       bones: []
       spriteID: 6cbb969f94e985a30800000000000000
       internalID: 4204284292704615366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Page 3_1
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 1162
+        width: 891
+        height: 260
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec4dcf1345510ca4c88486e648bf4d75
+      internalID: -518538352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Page 3_2
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 785
+        width: 858
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d43cbeb5b2a78824191ce45bcde3b019
+      internalID: 1996998419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Page 3_3
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 523
+        width: 807
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6abaa71a0d1bf7e459c541e80b54337b
+      internalID: -1389152345
       vertices: []
       indices: 
       edges: []
@@ -150,6 +216,8 @@ TextureImporter:
     nameFileIdTable:
       Page 3_0: 4204284292704615366
       Page 3_1: -518538352
+      Page 3_2: 1996998419
+      Page 3_3: -1389152345
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
