@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: cf091bc1d4c563f49a8dd09a52041f0a
+guid: 5c47b99e2033cdc42a578c68309721da
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6934233696673383967
-    second: Page 6_0
+      213: 6189169804994757
+    second: Aset Page 6_0
+  - first:
+      213: 8521145127367249567
+    second: Aset Page 6_1
+  - first:
+      213: 2514493737685267839
+    second: Aset Page 6_2
+  - first:
+      213: 4585278499777396559
+    second: Aset Page 6_3
+  - first:
+      213: -6106705555183663260
+    second: Aset Page 6_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,89 +125,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Page 6_0
+      name: Aset Page 6_0
       rect:
         serializedVersion: 2
-        x: 50
-        y: 1761
-        width: 581
-        height: 77
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f16c2c7dec85b3060800000000000000
-      internalID: 6934233696673383967
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Page 6_1
-      rect:
-        serializedVersion: 2
-        x: 62
-        y: 1526
-        width: 315
-        height: 29
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cc411468d8ec5e64e8857ac367f231cf
-      internalID: -1145261439
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Page 6_2
-      rect:
-        serializedVersion: 2
-        x: 63
-        y: 789
-        width: 284
-        height: 29
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f2c135c6c6ae9c747b9d6ef0ef5724ab
-      internalID: -688222182
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Page 6_3
-      rect:
-        serializedVersion: 2
-        x: 46
-        y: 1611
-        width: 961
-        height: 120
+        x: 0
+        y: 2294
+        width: 954
+        height: 116
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 2c28f71d778bc97498e32d8d4d2f9263
-      internalID: -1533544684
+      spriteID: 5c86ea3640df51000800000000000000
+      internalID: 6189169804994757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aset Page 6_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2104
+        width: 954
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9e864ca850314670800000000000000
+      internalID: 8521145127367249567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aset Page 6_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1936
+        width: 954
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f75bca86bb645e220800000000000000
+      internalID: 2514493737685267839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aset Page 6_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1175
+        width: 966
+        height: 257
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4fb77f608e22af30800000000000000
+      internalID: 4585278499777396559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Aset Page 6_4
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 0
+        width: 701
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4678f5bf6af904ba0800000000000000
+      internalID: -6106705555183663260
       vertices: []
       indices: 
       edges: []
@@ -204,7 +238,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c5b3a15a73d51eb438f5baa13a46dfb5
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -214,10 +248,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Page 6_0: 6934233696673383967
-      Page 6_1: -1145261439
-      Page 6_2: -688222182
-      Page 6_3: -1533544684
+      Aset Page 6_0: 6189169804994757
+      Aset Page 6_1: 8521145127367249567
+      Aset Page 6_2: 2514493737685267839
+      Aset Page 6_3: 4585278499777396559
+      Aset Page 6_4: -6106705555183663260
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
