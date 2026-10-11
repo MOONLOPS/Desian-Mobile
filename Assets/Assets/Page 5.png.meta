@@ -116,10 +116,10 @@ TextureImporter:
       name: Page 5_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1080
-        height: 1920
+        x: 267
+        y: 1428
+        width: 515
+        height: 395
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,11 +134,143 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Page 5_1
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 1160
+        width: 918
+        height: 230
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bbc0844722f99e498833cf4db35fee5
+      internalID: 1416881387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Page 5_2
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 540
+        width: 426
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67e2e764ba836124b9215cbbc7120c27
+      internalID: -133266754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Page 5_3
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 466
+        width: 813
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da92dbb6ad3e96943b20ef66463a2575
+      internalID: 933609232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Page 5_4
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 382
+        width: 804
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 057290701d6dce741971b06d62380045
+      internalID: 1126783754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Page 5_5
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 341
+        width: 934
+        height: 759
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5943ef2f0e89320408f77a7f7b2eed03
+      internalID: 603698990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Page 5_6
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 30
+        width: 831
+        height: 193
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f7198aa147b5ce4b9fa94c4f71833be
+      internalID: 1494169276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: e514308f797aafe4c8f650a976603f84
     internalID: 0
     vertices: []
     indices: 
@@ -149,6 +281,12 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Page 5_0: -5666996480505812442
+      Page 5_1: 1416881387
+      Page 5_2: -133266754
+      Page 5_3: 933609232
+      Page 5_4: 1126783754
+      Page 5_5: 603698990
+      Page 5_6: 1494169276
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
