@@ -7,4 +7,9 @@ public class SceneController : MonoBehaviour
     {
         SceneManager.LoadScene("Daftar Akun");
     }
+
+    public void KeHalamanLogin()
+    {
+        SceneManager.LoadScene("LOGIN");
+    } 
 }

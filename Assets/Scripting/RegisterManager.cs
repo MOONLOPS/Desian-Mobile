@@ -8,6 +8,9 @@ public class RegisterManager : MonoBehaviour
     public TMP_InputField inputPassword;
     public TMP_InputField inputKonfirmasi;
 
+
+    public GameObject popUpGagalDaftar;
+
     public void ProsesDaftar()
     {
         string nama = inputnama.text;
@@ -27,18 +30,9 @@ public class RegisterManager : MonoBehaviour
             return;
         }
 
-        int otp = Random.Range(100000, 999999);
-
-        KirimEmailOTP(nama, email, otp);
-    }
-
-    private void KirimEmailOTP(string nama, string email, int otp)
-    {
-
-        Debug.Log("================================");
-        Debug.Log($"Halo {nama}, memproses pendaftaran....");
-        Debug.Log($"MENGIRIM OTP: {otp} ke email: {email}");
-        Debug.Log("Status: Membutuhkan koneksi internet");
-        Debug.Log("================================");
+        if (popUpGagalDaftar != null)
+        {
+            popUpGagalDaftar.SetActive(true);
+        }
     }
 }
