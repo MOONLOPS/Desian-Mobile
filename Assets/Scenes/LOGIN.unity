@@ -967,6 +967,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1090003250}
   - component: {fileID: 1090003249}
+  - component: {fileID: 1090003251}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1001,6 +1002,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1090003251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090003248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d06d76be89e4444ba7818a642938692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoginManager
+  inputEmail: {fileID: 1477185279}
+  inputPassword: {fileID: 1558506566}
+  namaSceneTujuan: Page 1
 --- !u!1 &1477185277
 GameObject:
   m_ObjectHideFlags: 0
@@ -1944,7 +1960,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2104122242}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1090003251}
+        m_TargetAssemblyTypeName: LoginManager, Assembly-CSharp
+        m_MethodName: ProsesLogin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2104122242
 MonoBehaviour:
   m_ObjectHideFlags: 0
