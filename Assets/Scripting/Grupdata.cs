@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class GrupData
 {
     public int id;
+    public string kode;          // kode unik untuk bergabung ke grup
     public string nama;
     public int jumlahAnggota;
     public long target;

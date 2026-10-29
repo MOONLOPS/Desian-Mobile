@@ -9,6 +9,7 @@ public class GrupCardItem : MonoBehaviour
     public GameObject txtTerkumpul;
     public GameObject txtPersentase;
     public GameObject txtPosisi;
+    public GameObject txtKode;       // opsional: teks baru untuk menampilkan kode grup
     public Slider slider;
 
     [Header("Tombol")]
@@ -31,6 +32,7 @@ public class GrupCardItem : MonoBehaviour
         UIHelper.SetText(txtTerkumpul, $"Rp {d.terkumpul:N0} dari Rp {d.target:N0}");
         UIHelper.SetText(txtPersentase, $"{persen:0}%");
         UIHelper.SetText(txtPosisi, "ADMIN");
+        UIHelper.SetText(txtKode, $"Kode: {d.kode}");
 
         if (slider)
         {
