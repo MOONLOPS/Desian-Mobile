@@ -1,8 +1,6 @@
-using Unity.VisualScripting.ReorderableList.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
-// Pasang di prefab Grupcard (pengelola prefab, sama seperti KelolaToDoPrefab di video)
 public class GrupCardItem : MonoBehaviour
 {
     [Header("Isi Card (drag GameObject-nya)")]

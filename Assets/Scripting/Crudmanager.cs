@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Text.RegularExpressions;
-using Unity.VisualScripting.ReorderableList.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,26 +9,25 @@ public class CRUDManager : MonoBehaviour
     private const string KEY_NEXT_ID = "grup_next_id";
 
     [Header("List")]
-    public Transform content;            // Scroll View > Viewport > Content
-    public GameObject grupCardPrefab;    // prefab Grupcard (drag dari Project window)
-    public Button btnBuatGrup;           // "btn Utama" (Buat/Gabung Grup)
+    public Transform content;
+    public GameObject grupCardPrefab;
+    public Button btnBuatGrup;
 
-    [Header("Panel Form (EditGrup) - drag GameObject-nya")]
+    [Header("Popup Form (EditGrup)")]
     public GameObject panelEdit;
-    public GameObject txtJudulForm;      // teks "Edit Grup"
+    public GameObject txtJudulForm;
     public GameObject inputNama;
     public GameObject inputTarget;
     public GameObject inputTanggal;
     public GameObject inputAnggota;
-    public Button btnTambah;             // +
-    public Button btnKurang;             // -
-    public Button btnClose;              // tombol "<"
+    public Button btnTambah;
+    public Button btnKurang;
+    public Button btnClose;
     public Button btnSimpan;
 
     private GrupList db = new GrupList();
-    private int editId = -1;             // -1 = mode tambah, selain itu = mode edit
+    private int editId = -1;   // -1 = mode tambah, selain itu = mode edit
 
-    // ---------- LIFECYCLE ----------
     void Start()
     {
         btnBuatGrup.onClick.AddListener(BukaFormTambah);
@@ -46,7 +44,7 @@ public class CRUDManager : MonoBehaviour
         Render();
     }
 
-    // ---------- STORAGE (PlayerPrefs + JSON) ----------
+    // ---------- STORAGE ----------
     void Load()
     {
         string json = PlayerPrefs.GetString(KEY_DATA, "");
@@ -70,7 +68,6 @@ public class CRUDManager : MonoBehaviour
     // ---------- READ ----------
     void Render()
     {
-        // hapus card lama, lalu bangun ulang dari data
         foreach (Transform child in content) Destroy(child.gameObject);
 
         foreach (GrupData g in db.items)
@@ -108,7 +105,7 @@ public class CRUDManager : MonoBehaviour
 
     public void TutupForm()
     {
-        editId = -1; // reset supaya tidak mengedit data yang salah
+        editId = -1;   // reset supaya tidak mengedit data yang salah
         panelEdit.SetActive(false);
     }
 

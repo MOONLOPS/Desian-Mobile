@@ -12,7 +12,6 @@ public class GrupData
     public string tanggal;
 }
 
-// JsonUtility tidak bisa serialisasi List langsung, jadi dibungkus class ini
 [Serializable]
 public class GrupList
 {

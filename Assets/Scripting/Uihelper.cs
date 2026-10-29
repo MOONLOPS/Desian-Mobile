@@ -2,8 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-// Helper agar script bisa dipakai dengan UI legacy (Text/InputField) maupun TextMeshPro.
-// Cukup drag GameObject-nya ke Inspector, tipe komponen dicek otomatis.
 public static class UIHelper
 {
     public static void SetText(GameObject go, string value)
