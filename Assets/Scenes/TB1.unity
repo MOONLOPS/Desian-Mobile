@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9343505
 RectTransform:
   m_ObjectHideFlags: 0
@@ -146,16 +146,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9343504}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 90}
+  m_LocalScale: {x: 0.0052083335, y: 0.0052083335, z: 0.0052083335}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 400651704}
-  m_Father: {fileID: 898174203}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -10032000, y: -23516104}
+  m_AnchoredPosition: {x: 1.90608e+9, y: 4.4680596e+9}
   m_SizeDelta: {x: 513.28, y: 135.17}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9343506
@@ -446,7 +446,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: 639.88007}
+  m_AnchoredPosition: {x: 0, y: 636}
   m_SizeDelta: {x: 500, y: 125.67}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &303385723
@@ -1177,7 +1177,7 @@ GameObject:
   - component: {fileID: 612113514}
   - component: {fileID: 612113515}
   m_Layer: 0
-  m_Name: Aset Tabungan Bersama 1_2
+  m_Name: Bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1192,8 +1192,8 @@ Transform:
   m_GameObject: {fileID: 612113513}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -227, y: -602, z: -17280}
-  m_LocalScale: {x: 192, y: 192, z: 192}
+  m_LocalPosition: {x: 19, y: -17, z: -17280}
+  m_LocalScale: {x: 101.759995, y: 101.759995, z: 101.759995}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 898174203}
@@ -1940,7 +1940,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9343505}
   - {fileID: 247848770}
   - {fileID: 303385722}
   - {fileID: 997620182}
@@ -6061,3 +6060,4 @@ SceneRoots:
   - {fileID: 1420263204}
   - {fileID: 1569652108}
   - {fileID: 1796752255}
+  - {fileID: 9343505}

@@ -267,6 +267,7 @@ MonoBehaviour:
   txtTerkumpul: {fileID: 7848441194618649858}
   txtPersentase: {fileID: 2768644157663835019}
   txtPosisi: {fileID: 4823025473341407414}
+  txtKode: {fileID: 0}
   slider: {fileID: 5548518299003994728}
   btnEdit: {fileID: 1596639669691323099}
   btnHapus: {fileID: 8662383198039856291}
@@ -379,7 +380,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 358, y: -147}
+  m_AnchoredPosition: {x: 206, y: -144}
   m_SizeDelta: {x: 108.83, y: 65.05}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1133693712664630587
@@ -609,7 +610,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 232, y: 121.66004}
+  m_AnchoredPosition: {x: 340, y: -141.73}
   m_SizeDelta: {x: 126.33, y: 60.51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7868310058343304751
@@ -1157,8 +1158,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -291.00006, y: 99.40003}
-  m_SizeDelta: {x: 388.63, y: 105.03}
+  m_AnchoredPosition: {x: -65.23929, y: 99.40003}
+  m_SizeDelta: {x: 840.1515, y: 105.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9152722766746113867
 CanvasRenderer:
