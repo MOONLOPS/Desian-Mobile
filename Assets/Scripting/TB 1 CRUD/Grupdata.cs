@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public class GrupData
 {
     public int id;
-    public string kode;          // kode unik untuk bergabung ke grup
+    public string kode;                 // kode undangan untuk bergabung
+    public string adminId;              // pembuat grup (satu-satunya yang boleh edit dan hapus)
+    public List<string> anggotaIds = new List<string>();   // pengguna yang bergabung lewat kode
     public string nama;
     public int jumlahAnggota;
     public long target;
