@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 
+// Helper agar script bisa dipakai dengan UI legacy (Text/InputField) maupun TextMeshPro.
+// Cukup drag GameObject-nya ke Inspector, tipe komponen dicek otomatis.
 public static class UIHelper
 {
     public static void SetText(GameObject go, string value)
@@ -41,5 +44,60 @@ public static class UIHelper
         if (tmpInput != null) { tmpInput.contentType = TMP_InputField.ContentType.IntegerNumber; return; }
         var legacyInput = go.GetComponent<InputField>();
         if (legacyInput != null) legacyInput.contentType = InputField.ContentType.IntegerNumber;
+    }
+
+    // ---------- tambahan ----------
+
+    // Mengubah InputField menjadi mode password (isi tampil sebagai titik).
+    public static void SetPassword(GameObject go)
+    {
+        if (go == null) return;
+        var tmpInput = go.GetComponent<TMP_InputField>();
+        if (tmpInput != null)
+        {
+            tmpInput.contentType = TMP_InputField.ContentType.Password;
+            tmpInput.ForceLabelUpdate();
+            return;
+        }
+        var legacyInput = go.GetComponent<InputField>();
+        if (legacyInput != null)
+        {
+            legacyInput.contentType = InputField.ContentType.Password;
+            legacyInput.ForceLabelUpdate();
+        }
+    }
+
+    // Mengisi teks label yang ada DI DALAM sebuah Button (Text berada di child).
+    public static void SetTextAnak(GameObject go, string value)
+    {
+        if (go == null) return;
+        var tmp = go.GetComponentInChildren<TMP_Text>(true);
+        if (tmp != null) { tmp.text = value; return; }
+        var legacy = go.GetComponentInChildren<Text>(true);
+        if (legacy != null) legacy.text = value;
+    }
+
+    // Mendengar perubahan isi InputField (dipanggil setiap huruf berubah).
+    public static void OnChange(GameObject go, UnityAction<string> aksi)
+    {
+        if (go == null) return;
+        var tmpInput = go.GetComponent<TMP_InputField>();
+        if (tmpInput != null) { tmpInput.onValueChanged.AddListener(aksi); return; }
+        var legacyInput = go.GetComponent<InputField>();
+        if (legacyInput != null) legacyInput.onValueChanged.AddListener(aksi);
+    }
+
+    // Tampilkan pesan di teks kalau ada, kalau tidak ada tulis ke Console.
+    public static void Pesan(GameObject txt, string pesan)
+    {
+        if (txt != null) SetText(txt, pesan);
+        else if (!string.IsNullOrEmpty(pesan)) Debug.Log(pesan);
+    }
+
+    // Supaya klik di area Slider tembus ke card (Button di root card).
+    public static void TanpaRaycast(Slider slider)
+    {
+        if (slider == null) return;
+        foreach (Graphic g in slider.GetComponentsInChildren<Graphic>(true)) g.raycastTarget = false;
     }
 }

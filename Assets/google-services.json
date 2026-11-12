@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "881586233862",
+    "firebase_url": "https://maynabunk-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "maynabunk",
+    "storage_bucket": "maynabunk.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881586233862:android:25f9566f84289fd65d9987",
+        "android_client_info": {
+          "package_name": "com.desian.maynabunk"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACh-b866QPGRcXbDIyjHVADH3GFeYlQa8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
