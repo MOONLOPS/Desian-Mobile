@@ -7,13 +7,13 @@ public static class SceneNavigator
 {
     private static readonly Dictionary<string, string> induk = new Dictionary<string, string>
     {
-        { SceneNames.DaftarTabungan,   SceneNames.Menu },
+        { SceneNames.DaftarTabungan,   SceneNames.Dashboard },
         { SceneNames.ApaImpianmu,      SceneNames.DaftarTabungan },
         { SceneNames.HomeTabunganku,   SceneNames.DaftarTabungan },
         { SceneNames.CatatTabungan,    SceneNames.HomeTabunganku },
         { SceneNames.TargetTercapai,   SceneNames.DaftarTabungan },
 
-        { SceneNames.TabunganBersama,  SceneNames.Menu },
+        { SceneNames.TabunganBersama,  SceneNames.Dashboard },
         { SceneNames.DetailGrup,       SceneNames.TabunganBersama },
         { SceneNames.CatatSetoran,     SceneNames.DetailGrup },
         { SceneNames.KonfirmasiSetoran, SceneNames.DetailGrup },

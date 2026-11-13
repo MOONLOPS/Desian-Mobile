@@ -3,7 +3,7 @@
 public static class SceneNames
 {
     public const string Login = "LOGIN";   // nama scene login di project
-    public const string Menu = "Menu";                          // Selamat Datang [user]
+    public const string Dashboard = "Dashboard";                // scene tujuan setelah login/register berhasil
 
     // Tabunganku (pribadi)
     public const string DaftarTabungan = "DaftarTabungan";

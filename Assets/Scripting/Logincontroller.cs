@@ -53,10 +53,10 @@ public class LoginController : MonoBehaviour
             return;
         }
 
-        // sudah pernah login -> langsung ke Menu
+        // sudah pernah login -> langsung ke Dashboard
         if (AuthService.PulihkanSesi())
         {
-            SceneNavigator.Buka(SceneNames.Menu);
+            SceneNavigator.Buka(SceneNames.Dashboard);
             return;
         }
 
@@ -96,7 +96,7 @@ public class LoginController : MonoBehaviour
         string error = await AuthService.MasukAsync(email, password);
         if (error == null)
         {
-            SceneNavigator.Buka(SceneNames.Menu);
+            SceneNavigator.Buka(SceneNames.Dashboard);
             return;
         }
 
@@ -121,7 +121,7 @@ public class LoginController : MonoBehaviour
         string error = await AuthService.DaftarAsync(email, password);
         if (error == null)
         {
-            SceneNavigator.Buka(SceneNames.Menu);
+            SceneNavigator.Buka(SceneNames.Dashboard);
             return;
         }
 
