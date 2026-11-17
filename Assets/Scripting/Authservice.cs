@@ -10,9 +10,7 @@ public static class AuthService
     private static FirebaseAuth auth;
     private static bool siap;
 
-    // Di Unity Editor, objek Firebase dimatikan saat Stop. Kalau Reload Domain dimatikan,
-    // variabel static ini bertahan dan menunjuk objek mati ("ThrowIfNull" / NullReference).
-    // Reset otomatis setiap Play dimulai supaya selalu memakai objek baru.
+    // Firebase dimatikan saat Stop, Reset otomatis setiap Play
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStatic()
     {
@@ -21,7 +19,7 @@ public static class AuthService
         siap = false;
     }
 
-    // Dipanggil otomatis oleh LoginController saat scene Login dimulai
+    // Manggil otomatis LoginController saat scene Login dimulai
     public static async Task<bool> SiapkanAsync()
     {
         if (siap && auth != null) return true;
@@ -50,7 +48,7 @@ public static class AuthService
         return false;
     }
 
-    // Mengecek apakah pengguna masih punya sesi login aktif di Firebase
+    // Ngecek apakah pengguna masih punya sesi login aktif di Firebase
     public static bool PulihkanSesi()
     {
         if (!siap) return false;
@@ -74,13 +72,14 @@ public static class AuthService
         if (!await SiapkanAsync())
             return "Firebase belum siap. Periksa koneksi internet.";
 
-        auth = FirebaseAuth.DefaultInstance;   // selalu pakai instance yang masih hidup
+        auth = FirebaseAuth.DefaultInstance;
 
         try
         {
             AuthResult hasil = await auth.SignInWithEmailAndPasswordAsync(email, password);
             Session.Masuk(BuatUser(EmailDariHasil(hasil, email)));
-            return null; // null menandakan berhasil
+            Debug.Log((hasil.User ?? auth.CurrentUser).UserId);   // UserId untuk laporan
+            return null; // null = berhasil
         }
         catch (Exception ex)
         {
@@ -94,13 +93,13 @@ public static class AuthService
         if (!await SiapkanAsync())
             return "Firebase belum siap. Periksa koneksi internet.";
 
-        auth = FirebaseAuth.DefaultInstance;   // selalu pakai instance yang masih hidup
+        auth = FirebaseAuth.DefaultInstance; 
 
         try
         {
             AuthResult hasil = await auth.CreateUserWithEmailAndPasswordAsync(email, password);
             Session.Masuk(BuatUser(EmailDariHasil(hasil, email)));
-            return null; // null menandakan berhasil
+            return null; // null = berhasil
         }
         catch (Exception ex)
         {
@@ -108,7 +107,7 @@ public static class AuthService
         }
     }
 
-    // Aman walaupun hasil atau User dari Firebase kosong (bisa terjadi di Unity Editor).
+
     private static string EmailDariHasil(AuthResult hasil, string emailKetik)
     {
         FirebaseUser user = (hasil != null && hasil.User != null) ? hasil.User : auth.CurrentUser;
@@ -135,7 +134,6 @@ public static class AuthService
         };
     }
 
-    // "budi@mail.com" -> "Budi". Dipakai daftar anggota grup dan sapaan di Menu.
     public static string NamaDari(string id)
     {
         if (string.IsNullOrEmpty(id)) return "";
@@ -164,8 +162,6 @@ public static class AuthService
                     return "Akun tidak ditemukan. Silakan daftar terlebih dahulu.";
                 case AuthError.EmailAlreadyInUse:
                     return "Email sudah terdaftar. Silakan login.";
-                case AuthError.WeakPassword:
-                    return "Password terlalu lemah. Gunakan minimal 8 karakter.";
                 case AuthError.NetworkRequestFailed:
                     return "Koneksi internet bermasalah.";
                 case AuthError.TooManyRequests:

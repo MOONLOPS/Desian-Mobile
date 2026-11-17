@@ -26,7 +26,7 @@ public class LoginController : MonoBehaviour
     [Header("Opsional")]
     public GameObject loading;                // teks/overlay "Mohon tunggu..." yang tampil saat proses berjalan
 
-    private const int MIN_PASSWORD = 6;       // batas minimum Firebase
+    private const int MIN_PASSWORD = 6;      
 
     private bool modeLogin = true;
     private bool sibuk;
@@ -104,7 +104,7 @@ public class LoginController : MonoBehaviour
         Pesan(error);
     }
 
-    // ---------- REGISTER (setelah berhasil langsung login) ----------
+    // REGISTER Setelah Login
     async void OnRegisterClick()
     {
         if (sibuk) return;
@@ -129,7 +129,6 @@ public class LoginController : MonoBehaviour
         Pesan(error);
     }
 
-    // ---------- HELPER ----------
     // null = data sudah layak dikirim ke Firebase
     static string Validasi(string email, string password, bool cekPanjang)
     {
