@@ -13,7 +13,7 @@ public static class Session
 
     // dibawa antar scene
     public static int ImpianTerpilihId = -1;
-    public static int GrupTerpilihId = -1;
+    public static string GrupTerpilihId = null;   // kunci grup di Firebase
 
     public static void Masuk(UserData user)
     {
@@ -26,7 +26,7 @@ public static class Session
     {
         User = null;
         ImpianTerpilihId = -1;
-        GrupTerpilihId = -1;
+        GrupTerpilihId = null;
         PlayerPrefs.DeleteKey(KEY_LOGIN);
         PlayerPrefs.Save();
         AuthService.Keluar();      // sign out dari Firebase juga

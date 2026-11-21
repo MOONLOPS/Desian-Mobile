@@ -1,22 +1,19 @@
 using System;
 using System.Collections.Generic;
 
+// Satu grup Tabungan Bersama. Disimpan di Firebase Realtime Database pada grup/{id}.
+// Objek ini hanya "salinan baca" untuk tampilan; GrupService yang mengisi dan menulisnya.
 [Serializable]
 public class GrupData
 {
-    public int id;
+    public string id;                   // kunci grup di Firebase (dibuat otomatis)
     public string kode;                 // kode undangan untuk bergabung
-    public string adminId;              // pembuat grup (satu-satunya yang boleh edit dan hapus)
-    public List<string> anggotaIds = new List<string>();   // pengguna yang bergabung lewat kode
+    public string adminId;              // email pembuat grup (satu-satunya yang boleh edit, hapus, konfirmasi)
+    public List<string> anggotaIds = new List<string>();   // email anggota yang bergabung lewat kode (tanpa admin)
     public string nama;
-    public int jumlahAnggota;
+    public int jumlahAnggota;           // dipakai tampilan: paling sedikit sebanyak anggota yang benar-benar ada
     public long target;
-    public long terkumpul;
-    public string tanggal;
-}
-
-[Serializable]
-public class GrupList
-{
-    public List<GrupData> items = new List<GrupData>();
+    public long terkumpul;              // jumlah setoran yang sudah dikonfirmasi (dihitung, tidak disimpan)
+    public string tanggal;              // deadline (teks bebas)
+    public List<SetoranData> setoran = new List<SetoranData>();
 }

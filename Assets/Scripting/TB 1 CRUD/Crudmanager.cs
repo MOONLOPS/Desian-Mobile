@@ -1,31 +1,21 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using static Unity.Burst.Intrinsics.X86;
 
-// Satu scene: daftar grup (Read), popup EditGrup (Create + Update), Delete di card,
-// dan panel Gabung Grup (bergabung memakai kode undangan).
+// Scene: TB1 ("Tabungan Bersama": daftar grup + popup Buat/Edit + panel Gabung dengan kode)
+// Create + Update : popup EditGrup     Read : daftar card     Delete : tombol hapus di card
 public class CRUDManager : MonoBehaviour
 {
-    private const string KEY_DATA = "grup_data";
-    private const string KEY_NEXT_ID = "grup_next_id";
-    private const string KEY_USER = "user_id";
-    private const string KODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
-    [Header("Pengguna Saat Ini")]
-    [Tooltip("Kosongkan untuk memakai ID perangkat. Isi nama (mis. budi) di Editor untuk menguji peran anggota.")]
-    public string idPenggunaUji = "";
-
     [Header("List")]
     public Transform content;             // Scroll View > Viewport > Content
-    public GameObject grupCardPrefab;     // prefab GrupCard (drag dari Project window)
+    public GameObject grupCardPrefab;     // prefab GrupCard
 
     [Header("Tombol Utama")]
     public Button btnBuatGrup;            // "btn buat"
     public Button btnGabungGrup;          // "btn gabung"
+    public Button btnKembali;             // opsional: kembali ke Menu
 
     [Header("Popup Buat/Edit (EditGrup)")]
     public GameObject panelEdit;
@@ -46,17 +36,34 @@ public class CRUDManager : MonoBehaviour
     public Button btnCloseGabung;         // opsional: tombol tutup panel
     public GameObject txtPesanGabung;     // opsional: teks kecil untuk pesan hasil
 
-    private GrupList db = new GrupList();
-    private int editId = -1;              // -1 = mode tambah, selain itu = mode edit
-    private string userId;
+    [Header("Pesan (opsional)")]
+    public GameObject txtStatus;          // di bawah daftar: "Memuat...", "Grup dibuat. Kode: XXXXXX", pesan error
+    public GameObject txtPesanForm;       // di dalam popup EditGrup: pesan error saat simpan
+
+    private string editId = null;         // null = mode tambah, selain itu = mode edit (kunci grup di Firebase)
+    private string pesanInfo = "";       // pesan yang tampil setelah daftar selesai dimuat (mis. kode grup baru)
+    private bool sibuk;                   // mencegah tombol terkirim dua kali selama proses ke Firebase
+    private readonly Dictionary<string, GrupData> cache = new Dictionary<string, GrupData>();
 
     // ---------- LIFECYCLE ----------
     void Start()
     {
-        userId = AmbilUserId();
+        if (!Session.PastikanLogin()) return;
+
+        // pengaman: kalau dua tombol utama tertukar di Inspector, tukar otomatis
+        if (btnBuatGrup != null && btnGabungGrup != null &&
+            btnBuatGrup.name.ToLower().Contains("gabung") &&
+            btnGabungGrup.name.ToLower().Contains("buat"))
+        {
+            Button tmp = btnBuatGrup;
+            btnBuatGrup = btnGabungGrup;
+            btnGabungGrup = tmp;
+        }
+        Debug.Log("Buat = " + btnBuatGrup.name + " | Gabung = " + (btnGabungGrup != null ? btnGabungGrup.name : "KOSONG"));
 
         btnBuatGrup.onClick.AddListener(BukaFormTambah);
         Hook(btnGabungGrup, BukaPanelGabung);
+        Hook(btnKembali, SceneNavigator.Kembali);
 
         btnClose.onClick.AddListener(TutupForm);
         btnSimpan.onClick.AddListener(Simpan);
@@ -72,88 +79,50 @@ public class CRUDManager : MonoBehaviour
         panelEdit.SetActive(false);
         Aktif(panelGabung, false);
 
-        Load();
         Render();
     }
 
     static void Hook(Button b, UnityAction a) { if (b != null) b.onClick.AddListener(a); }
     static void Aktif(GameObject go, bool v) { if (go != null) go.SetActive(v); }
 
-    // ---------- PENGGUNA & PERAN ----------
-    // Kalau project punya login, ganti isi fungsi ini dengan username hasil login
-    // (misalnya PlayerPrefs.GetString("username")).
-    string AmbilUserId()
-    {
-        if (!string.IsNullOrEmpty(idPenggunaUji)) return idPenggunaUji.Trim();
-
-        string id = PlayerPrefs.GetString(KEY_USER, "");
-        if (string.IsNullOrEmpty(id))
-        {
-            id = System.Guid.NewGuid().ToString("N").Substring(0, 8);
-            PlayerPrefs.SetString(KEY_USER, id);
-            PlayerPrefs.Save();
-        }
-        return id;
-    }
-
-    bool IsAdmin(GrupData g) { return g.adminId == userId; }
-    bool IsAnggota(GrupData g) { return g.anggotaIds != null && g.anggotaIds.Contains(userId); }
-    bool BolehLihat(GrupData g) { return IsAdmin(g) || IsAnggota(g); }
-
-    // ---------- STORAGE ----------
-    void Load()
-    {
-        string json = PlayerPrefs.GetString(KEY_DATA, "");
-        db = string.IsNullOrEmpty(json) ? new GrupList() : JsonUtility.FromJson<GrupList>(json);
-        if (db == null || db.items == null) db = new GrupList();
-
-        // melengkapi data lama (belum punya kode atau admin)
-        bool berubah = false;
-        foreach (GrupData g in db.items)
-        {
-            if (string.IsNullOrEmpty(g.kode)) { g.kode = BuatKodeUnik(); berubah = true; }
-            if (string.IsNullOrEmpty(g.adminId)) { g.adminId = userId; berubah = true; }
-            if (g.anggotaIds == null) { g.anggotaIds = new List<string>(); berubah = true; }
-        }
-        if (berubah) SaveToPrefs();
-    }
-
-    void SaveToPrefs()
-    {
-        PlayerPrefs.SetString(KEY_DATA, JsonUtility.ToJson(db));
-        PlayerPrefs.Save();
-    }
-
-    int NextId()
-    {
-        int id = PlayerPrefs.GetInt(KEY_NEXT_ID, 1);
-        PlayerPrefs.SetInt(KEY_NEXT_ID, id + 1);
-        return id;
-    }
-
-    string BuatKodeUnik()
-    {
-        string kode;
-        do
-        {
-            var sb = new StringBuilder();
-            for (int i = 0; i < 6; i++) sb.Append(KODE_CHARS[Random.Range(0, KODE_CHARS.Length)]);
-            kode = sb.ToString();
-        } while (db.items.Any(x => x.kode == kode));
-        return kode;
-    }
-
     // ---------- READ ----------
-    void Render()
+    async void Render()
     {
-        foreach (Transform child in content) Destroy(child.gameObject);
+        UIHelper.Pesan(txtStatus, "Memuat grup...");
 
-        // hanya grup milik pengguna ini (sebagai admin atau anggota)
-        foreach (GrupData g in db.items.Where(BolehLihat))
+        List<GrupData> daftar = await GrupService.MilikAsync();   // hanya grup milik pengguna ini
+        if (this == null || content == null) return;               // scene sudah berganti selama menunggu
+
+        if (daftar == null)
         {
-            GameObject go = Instantiate(grupCardPrefab, content);
-            go.GetComponent<GrupCardItem>().Setup(g, this, IsAdmin(g));
+            UIHelper.Pesan(txtStatus, "Gagal memuat grup. Periksa koneksi internet.");
+            return;
         }
+
+        foreach (Transform child in content)
+        {
+            child.gameObject.SetActive(false);
+            Destroy(child.gameObject);
+        }
+
+        cache.Clear();
+        foreach (GrupData g in daftar)
+        {
+            cache[g.id] = g;
+            GameObject go = Instantiate(grupCardPrefab, content);
+            go.GetComponent<GrupCardItem>().Setup(g, this, GrupService.IsAdmin(g));
+        }
+
+        if (pesanInfo != "") UIHelper.Pesan(txtStatus, pesanInfo);
+        else UIHelper.Pesan(txtStatus, daftar.Count == 0 ? "Belum ada grup. Buat grup atau gabung dengan kode." : "");
+        pesanInfo = "";
+    }
+
+    // klik card -> Detail Grup
+    public void BukaDetail(string id)
+    {
+        Session.GrupTerpilihId = id;
+        SceneNavigator.Buka(SceneNames.DetailGrup);
     }
 
     // ---------- FORM BUAT / EDIT ----------
@@ -161,21 +130,23 @@ public class CRUDManager : MonoBehaviour
     {
         Aktif(panelGabung, false);
 
-        editId = -1;
+        editId = null;
+        UIHelper.Pesan(txtPesanForm, "");
         UIHelper.SetText(txtJudulForm, "Buat Grup");
         UIHelper.SetText(inputNama, "");
         UIHelper.SetText(inputTarget, "");
         UIHelper.SetText(inputTanggal, "");
         UIHelper.SetText(inputAnggota, "1");
         panelEdit.SetActive(true);
+        panelEdit.transform.SetAsLastSibling();
     }
 
-    public void BukaFormEdit(int id)
+    public void BukaFormEdit(string id)
     {
-        GrupData g = db.items.FirstOrDefault(x => x.id == id);
-        if (g == null) return;
+        GrupData g;
+        if (!cache.TryGetValue(id, out g)) return;
 
-        if (!IsAdmin(g))   // pengaman: hanya admin
+        if (!GrupService.IsAdmin(g))   // pengaman: hanya admin
         {
             Debug.LogWarning("Hanya admin yang boleh mengedit grup.");
             return;
@@ -184,70 +155,73 @@ public class CRUDManager : MonoBehaviour
         Aktif(panelGabung, false);
 
         editId = id;
+        UIHelper.Pesan(txtPesanForm, "");
         UIHelper.SetText(txtJudulForm, "Edit Grup");
         UIHelper.SetText(inputNama, g.nama);
         UIHelper.SetText(inputTarget, g.target.ToString());
         UIHelper.SetText(inputTanggal, g.tanggal);
         UIHelper.SetText(inputAnggota, g.jumlahAnggota.ToString());
         panelEdit.SetActive(true);
+        panelEdit.transform.SetAsLastSibling();
     }
 
     public void TutupForm()
     {
-        editId = -1;   // reset supaya tidak mengedit data yang salah
+        editId = null;   // reset supaya tidak mengedit data yang salah
         panelEdit.SetActive(false);
     }
 
     void UbahAnggota(int delta)
     {
-        int n = ParseInt(UIHelper.GetText(inputAnggota), 1) + delta;
+        int n = ParseAnggota(UIHelper.GetText(inputAnggota)) + delta;
         UIHelper.SetText(inputAnggota, Mathf.Max(1, n).ToString());
     }
 
     // ---------- CREATE + UPDATE ----------
-    void Simpan()
+    async void Simpan()
     {
+        if (sibuk) return;
+
         string nama = UIHelper.GetText(inputNama).Trim();
         if (string.IsNullOrEmpty(nama))
         {
-            Debug.LogWarning("Nama grup tidak boleh kosong.");
+            UIHelper.Pesan(txtPesanForm, "Nama grup tidak boleh kosong.");
             return;
         }
 
-        int anggota = Mathf.Max(1, ParseInt(UIHelper.GetText(inputAnggota), 1));
-        long target = ParseLong(UIHelper.GetText(inputTarget));
+        int anggota = ParseAnggota(UIHelper.GetText(inputAnggota));
+        long target = Fmt.ParseUang(UIHelper.GetText(inputTarget));
         string tanggal = UIHelper.GetText(inputTanggal).Trim();
 
-        if (editId < 0)
+        sibuk = true;
+        btnSimpan.interactable = false;
+        UIHelper.Pesan(txtPesanForm, "Menyimpan...");
+
+        string error;
+        string info = "";
+        if (editId == null)
         {
-            // CREATE: pembuat otomatis menjadi admin
-            db.items.Add(new GrupData
-            {
-                id = NextId(),
-                kode = BuatKodeUnik(),
-                adminId = userId,
-                nama = nama,
-                jumlahAnggota = anggota,
-                target = target,
-                terkumpul = 0,
-                tanggal = tanggal
-            });
+            var hasil = await GrupService.BuatAsync(nama, anggota, target, tanggal);   // pembuat = admin
+            error = hasil.error;
+            if (error == null) info = "Grup dibuat. Kode undangan: " + hasil.grup.kode;
         }
         else
         {
-            // UPDATE: hanya admin
-            GrupData g = db.items.FirstOrDefault(x => x.id == editId);
-            if (g != null && IsAdmin(g))
-            {
-                g.nama = nama;
-                g.jumlahAnggota = anggota;
-                g.target = target;
-                g.tanggal = tanggal;
-            }
+            error = await GrupService.PerbaruiAsync(editId, nama, anggota, target, tanggal);   // hanya admin
         }
 
-        SaveToPrefs();
+        if (this == null) return;
+        sibuk = false;
+        btnSimpan.interactable = true;
+
+        if (error != null)
+        {
+            UIHelper.Pesan(txtPesanForm, error);
+            return;
+        }
+
         TutupForm();
+        pesanInfo = info;
         Render();
     }
 
@@ -257,8 +231,9 @@ public class CRUDManager : MonoBehaviour
         TutupForm();   // pastikan popup buat/edit tertutup
 
         UIHelper.SetText(inputKode, "");
-        Pesan("");
+        UIHelper.Pesan(txtPesanGabung, "");
         Aktif(panelGabung, true);
+        if (panelGabung != null) panelGabung.transform.SetAsLastSibling();
     }
 
     void TutupPanelGabung()
@@ -266,69 +241,52 @@ public class CRUDManager : MonoBehaviour
         Aktif(panelGabung, false);
     }
 
-    void Gabung()
+    async void Gabung()
     {
-        string kode = UIHelper.GetText(inputKode).Trim().ToUpper();
-        if (string.IsNullOrEmpty(kode))
+        if (sibuk) return;
+        sibuk = true;
+        if (btnGabung != null) btnGabung.interactable = false;
+        UIHelper.Pesan(txtPesanGabung, "Mencari grup...");
+
+        string error = await GrupService.GabungAsync(UIHelper.GetText(inputKode));
+
+        if (this == null) return;
+        sibuk = false;
+        if (btnGabung != null) btnGabung.interactable = true;
+
+        if (error != null)
         {
-            Pesan("Masukkan kode undangan.");
+            UIHelper.Pesan(txtPesanGabung, error);
             return;
         }
-
-        GrupData g = db.items.FirstOrDefault(x => x.kode == kode);
-        if (g == null)
-        {
-            Pesan("Kode tidak ditemukan.");
-            return;
-        }
-
-        if (BolehLihat(g))
-        {
-            Pesan("Anda sudah tergabung di grup ini.");
-            return;
-        }
-
-        // pengguna masuk sebagai ANGGOTA (tanpa hak edit dan hapus)
-        g.anggotaIds.Add(userId);
-        g.jumlahAnggota++;
-        SaveToPrefs();
 
         TutupPanelGabung();
-        Render();
-    }
-
-    // pesan hasil: tampil di teks kecil kalau ada, kalau tidak ke Console
-    void Pesan(string teks)
-    {
-        if (txtPesanGabung != null) UIHelper.SetText(txtPesanGabung, teks);
-        else if (!string.IsNullOrEmpty(teks)) Debug.Log(teks);
+        Render();      // grup baru muncul sebagai Anggota
     }
 
     // ---------- DELETE ----------
-    public void HapusGrup(int id)
+    public async void HapusGrup(string id)
     {
-        GrupData g = db.items.FirstOrDefault(x => x.id == id);
-        if (g == null) return;
+        if (sibuk) return;
+        sibuk = true;
 
-        if (!IsAdmin(g))   // pengaman: hanya admin
+        string error = await GrupService.HapusAsync(id);    // gagal kalau bukan admin
+
+        if (this == null) return;
+        sibuk = false;
+
+        if (error != null)
         {
-            Debug.LogWarning("Hanya admin yang boleh menghapus grup.");
+            UIHelper.Pesan(txtStatus, error);
             return;
         }
-
-        db.items.Remove(g);
-        SaveToPrefs();
         Render();
     }
 
     // ---------- HELPER ----------
-    static int ParseInt(string s, int fallback)
+    static int ParseAnggota(string s)
     {
-        return int.TryParse(Regex.Replace(s ?? "", "[^0-9]", ""), out int r) ? r : fallback;
-    }
-
-    static long ParseLong(string s)
-    {
-        return long.TryParse(Regex.Replace(s ?? "", "[^0-9]", ""), out long r) ? r : 0;
+        long n = Fmt.ParseUang(s);
+        return n < 1 ? 1 : (int)System.Math.Min(n, 9999);
     }
 }
